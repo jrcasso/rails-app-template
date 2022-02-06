@@ -1,0 +1,29 @@
+version: '3.7'
+volumes:
+  pgdata:
+
+services:
+  rails:
+    build:
+      context: .
+      args:
+        - DEVELOPMENT=true
+    working_dir: /app
+    environment:
+      - ENV=dev
+      - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_PASSWORD=development
+      - POSTGRES_USER=app
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
