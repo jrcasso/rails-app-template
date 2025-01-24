@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  PORT = 3000
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
@@ -38,7 +39,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.default_url_options = { host: "localhost", port: PORT }
+  config.hosts << "#{ENV.fetch('CODESPACE_NAME')}-#{PORT}.app.github.dev" if ENV.fetch('ENV') == 'dev'
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
