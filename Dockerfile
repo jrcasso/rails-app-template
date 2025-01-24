@@ -16,12 +16,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 
-# RUN gem install bundler && \
-#     bundle install --without development test && \
-#     if ${DEVELOPMENT}; then bundle install; fi;
+RUN gem install bundler && \
+    bundle install --without development test && \
+    if ${DEVELOPMENT}; then bundle install --with development test; fi;
 
-# COPY . ./
+COPY . ./
 
-# CMD [ "bundle", "exec", "rails", "serve" ]
+CMD [ "bundle", "exec", "rails", "serve" ]
